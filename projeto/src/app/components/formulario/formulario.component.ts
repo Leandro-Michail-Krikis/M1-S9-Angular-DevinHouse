@@ -1,9 +1,12 @@
 import { Component, OnInit } from "@angular/core";
+import { FormBuilder } from "@angular/forms";
+
+
 
 @Component({
   selector: "app-formulario",
   template: `
-    <form>
+    <form (ngSubmit)="onSubmit()" >
       <div class="mb-3">
         <label for="name" class="form-label">Nome</label>
         <input type="text" class="form-control" id="name" />
@@ -28,9 +31,7 @@ import { Component, OnInit } from "@angular/core";
             id="radioTrue"
             value="true"
           />
-          <label class="form-check-label" for="radioTrue">
-            Não
-          </label>
+          <label class="form-check-label" for="radioTrue"> Não </label>
         </div>
         <div class="form-check">
           <input
@@ -40,18 +41,42 @@ import { Component, OnInit } from "@angular/core";
             id="radioFalse"
             value="false"
           />
-          <label class="form-check-label" for="radioFalse">
-            Sim
-          </label>
+          <label class="form-check-label" for="radioFalse"> Sim </label>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary" >Submit</button>
     </form>
+
+    <div id="modalBootstrap" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Formulário enviado com sucesso</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              (click)="fechaModal()"
+            ></button>
+          </div>        
+        </div>
+      </div>
+    </div>
   `,
   styles: [],
 })
-export class FormularioComponent implements OnInit {
-  constructor() {}
+export class FormularioComponent {
 
-  ngOnInit(): void {}
+  constructor(
+    private formBuilder: FormBuilder
+  ) {}
+
+  onSubmit() {
+    document.getElementById("modalBootstrap")!.style.display = "block"
+  }
+  
+  fechaModal() {
+    document.getElementById("modalBootstrap")!.style.display = "none"
+  }
 }
